@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isDying = false;
 
+    public bool isSitting = false;
+
     [SerializeField] public float speed;
 
 
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
        _playerStateMachine.Add((int)PlayerStatesEnum._MOVING_X, new MovingPlayerState(_playerStateMachine,this,"Moving"));
        _playerStateMachine.Add((int)PlayerStatesEnum._MOVING_Y, new MovingPlayerState(_playerStateMachine,this,"Moving"));
        _playerStateMachine.Add((int)PlayerStatesEnum._DYING_,new DyingPlayerState(_playerStateMachine,this,"Dying"));
+       _playerStateMachine.Add((int)PlayerStatesEnum._SITTING_, new SittingPlayerState(_playerStateMachine,this,"Sitting"));
        _playerStateMachine.SetCurrentState(_playerStateMachine.GetState((int)PlayerStatesEnum._IDLE_));
     }
 
@@ -81,5 +84,23 @@ public class PlayerMovement : MonoBehaviour
     {
         _animator.SetFloat("MoveX", _playerInputHandler.movementInput.x);
         _animator.SetFloat("MoveY",_playerInputHandler.movementInput.y);
+    }
+
+    public void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.gameObject.CompareTag("Chair"))
+        {
+            Debug.Log("In Range");
+            isSitting = true; 
+            gameObject.transform.position = new Vector2(other.gameObject.transform.position.x,other.gameObject.transform.position.y);
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D other) 
+    {
+        if(other.gameObject.CompareTag("Chair"))
+        {
+            isSitting = false;
+        }
     }
 }

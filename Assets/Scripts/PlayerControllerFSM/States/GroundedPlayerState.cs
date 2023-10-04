@@ -34,6 +34,11 @@ public class GroundedPlayerState : PlayerState
         {
           _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._DYING_));
         }
+
+        if(_playerMovement.isSitting == true)
+        {
+          _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._SITTING_));
+        }
     }
 
     public override void FixedUpdate()
