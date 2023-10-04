@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 10.0f;
 
     public List<Dictionary<GameObject, float>> interactablesWithDistances;
-
     private void Start()
     {
         interactablesWithDistances = new List<Dictionary<GameObject, float>>();
@@ -33,11 +32,6 @@ public class PlayerController : MonoBehaviour
         if (interactablesWithDistances.Count == 0)
         {
             return null;
-        }
-
-        if (interactablesWithDistances.Count == 1)
-        {
-            return interactablesWithDistances[0].Keys.GetEnumerator().Current;
         }
 
         var closestDistance = float.MaxValue;

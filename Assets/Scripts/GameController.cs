@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private GameModeController _gameModeController;
+    
     void Start()
     {
-        
+        _gameModeController = GetComponent<GameModeController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
     }
 }

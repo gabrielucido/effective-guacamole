@@ -272,6 +272,7 @@ GameObject:
   - component: {fileID: 5726671309600033426}
   - component: {fileID: 1769314359767074196}
   - component: {fileID: 8957932504943935225}
+  - component: {fileID: 9044795608505258965}
   m_Layer: 0
   m_Name: Interactable
   m_TagString: Untagged
@@ -310,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overlaySprite: {fileID: 21300000, guid: 3ac7f0678126742098f4b483886db4b5, type: 3}
   offset: {x: 0, y: 1, z: 0}
+  callbackController: {fileID: 0}
 --- !u!61 &8957932504943935225
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -356,3 +358,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &9044795608505258965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5651999630220111137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b031a812a4ce14eb6866a1820ea6cc57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

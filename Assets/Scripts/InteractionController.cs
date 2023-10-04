@@ -5,20 +5,26 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Utils;
 
 public class InteractionController : MonoBehaviour
 {
-    [SerializeField] private Sprite overlaySprite;
+    [SerializeField] private Sprite enabledSprite;
+    [SerializeField] private Sprite disabledSprite;
+    private Sprite _overlaySprite;
     [SerializeField] private Vector3 offset = new Vector3(0, 1.2f, 0);
+    [SerializeField] private EventCodes eventCode = EventCodes.Unknown;
 
     private bool _isInteractable = false;
     private GameObject _imageObject;
     private GameObject _overlayCanvas;
     private Camera _mainCamera;
+    private CallbackController _callbackController;
+    private InventoryController _invetoryController;
 
     private void Start()
     {
-        if (overlaySprite == null)
+        if (enabledSprite == null || disabledSprite == null)
         {
             throw new NotImplementedException("Interactable Objects must have a overlay sprite set!");
         }
@@ -28,17 +34,43 @@ public class InteractionController : MonoBehaviour
             throw new NotImplementedException("Main Camera not found!");
         }
 
+        if (eventCode == EventCodes.Unknown)
+        {
+            throw new NotImplementedException("Event Code not set!");
+        }
+
+        _invetoryController = GameObject.Find("GameController").GetComponent<InventoryController>();
+        if (_invetoryController == null)
+        {
+            throw new NotImplementedException("Cannot Find Inventory Controller");
+        }
+
         _mainCamera = Camera.main;
         _overlayCanvas = GetComponentInChildren<Canvas>().gameObject;
         _imageObject = _overlayCanvas.gameObject.GetComponentInChildren<Image>().gameObject;
-        _imageObject.GetComponent<Image>().sprite = overlaySprite;
+        _imageObject.GetComponent<Image>().sprite = enabledSprite;
         _overlayCanvas.SetActive(false);
+        _callbackController = GetComponent<CallbackController>();
     }
 
     private void Update()
     {
         HandleInteraction();
         UpdateLayoutHintPosition();
+        UpdateDisabledInteractionSprite();
+    }
+
+    public void UpdateDisabledInteractionSprite()
+    {
+        if (_invetoryController.getEquipedItem() != null)
+        {
+            _overlaySprite = disabledSprite;
+        }
+        else
+        {
+            _overlaySprite = enabledSprite;
+        }
+        _imageObject.GetComponent<Image>().sprite = _overlaySprite;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -66,9 +98,10 @@ public class InteractionController : MonoBehaviour
 
             var closestInteractableGameObject = playerController.getClosestInteractableGameObject();
             if (closestInteractableGameObject == gameObject)
-            {   
+            {
                 EnableInteraction();
-            } else
+            }
+            else
             {
                 DisableInteraction();
             }
@@ -131,7 +164,7 @@ public class InteractionController : MonoBehaviour
     {
         if (_isInteractable && Input.GetButtonDown("Interact"))
         {
-            Debug.Log("Interaction!!!");
+            _callbackController.InteractionCallback(eventCode, gameObject);
         }
     }
 
