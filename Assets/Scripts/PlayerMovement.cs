@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool hasBeenPushed = false;
 
+    public IEnumerator coroutine;
     void Awake()
     {
        _animator = GetComponent<Animator>();
