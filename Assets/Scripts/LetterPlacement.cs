@@ -8,7 +8,6 @@ public class LetterPlacement : MonoBehaviour
  public Transform letterContainer;
     public TMP_Text letterPrefab;
     public TMP_Text fraseAlvoText;
-
     private string targetPhrase;
     private string currentInput = "";
 
@@ -67,12 +66,6 @@ public class LetterPlacement : MonoBehaviour
     // Função para atualizar a exibição das letras com base na entrada atual
     private void UpdateLetterDisplay()
     {
-         // Limpe o contêiner antes de posicionar as letras novamente
-    foreach (Transform child in letterContainer)
-    {
-        Destroy(child.gameObject);
-    }
-
     // Percorra cada letra na frase-alvo
     for (int i = 0; i < targetPhrase.Length; i++)
     {
@@ -86,11 +79,12 @@ public class LetterPlacement : MonoBehaviour
         }
         else
         {
+            
             letterText.text = "_"; // Use "_" para representar letras ausentes
         }
 
         // Posicione as letras com base em sua ordem na frase-alvo
-        letterText.rectTransform.localPosition = new Vector3(i * 20, 0, 0);
+        letterText.rectTransform.localPosition = new Vector3(i * 50, 0, 0);
     }
     }
 
