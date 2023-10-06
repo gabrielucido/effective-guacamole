@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isSittingOffice = false;
 
+    public bool canDetect = false;
+
     [SerializeField] public float speed;
 
 
@@ -28,16 +31,17 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector2 currentDirection;
    
+   public GameObject visualCue;
 
-    
+   public GameObject targetFraseDisplay;
+
+   public GameObject officeUI;
+
+   public GameObject letterPlacement;
+
     private Vector2 _currentSpeed; 
 
     private Vector2 _workspace;
-
-    public GameObject holePrefab;
-
-    public bool hasBeenPushed = false;
-
     public IEnumerator coroutine;
     void Awake()
     {
@@ -56,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        
+        visualCue.SetActive(false);
     }
 
     void Update()
@@ -94,27 +98,52 @@ public class PlayerMovement : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Chair"))
         {
-            Debug.Log("In Range");
-            isSittingClassroom = true; 
+
+            visualCue.SetActive(true);
+             if (visualCue == true && _playerInputHandler.DidInteract())
+            {
+                
+                gameObject.transform.position = new Vector2(other.gameObject.transform.position.x, other.gameObject.transform.position.y);
+               
+            }   
+             
             gameObject.transform.position = new Vector2(other.gameObject.transform.position.x,other.gameObject.transform.position.y);
         }
          if(other.gameObject.CompareTag("OfficeChair"))
         {
-            isSittingOffice = true;
-            gameObject.transform.position = new Vector2(other.gameObject.transform.position.x,other.gameObject.transform.position.y);
+            visualCue.SetActive(true);
         }
     }
 
+    public void OnTriggerStay2D(Collider2D other)
+    {
+            if (visualCue == true && _playerInputHandler.DidInteract())
+            {
+                letterPlacement.SetActive(true);
+                gameObject.transform.position = new Vector2(other.gameObject.transform.position.x, other.gameObject.transform.position.y);
+                targetFraseDisplay.SetActive(true);
+                officeUI.SetActive(true);   
+                visualCue.SetActive(false);
+            }
+
+            if(_playerInputHandler.DidLeave())
+            {
+                
+                targetFraseDisplay.SetActive(false);
+            }   
+    }
     public void OnTriggerExit2D(Collider2D other) 
     {
         if(other.gameObject.CompareTag("Chair"))
         {
             isSittingClassroom = false;
+            visualCue.SetActive(false);
         }
 
         if(other.gameObject.CompareTag("OfficeChair"))
         {
             isSittingOffice = false;
+            visualCue.SetActive(false);
         }
     }
 }

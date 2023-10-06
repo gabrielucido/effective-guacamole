@@ -11,11 +11,23 @@ public class LetterPlacement : MonoBehaviour
     private string targetPhrase;
     private string currentInput = "";
 
+    public GameObject targetFraseDisplay;
+
+    public PlayerMovement _playerMovement;
+
+    public PlayerInputHandler _playerInputHandler;
+
+    public GameObject letterController;
+
+    public GameObject officeUI;
+
     private Dictionary<char, int> letterCounts = new Dictionary<char, int>();
 
     private void Start()
     {
         targetPhrase = fraseAlvoText.text;
+
+        _playerMovement = GetComponent<PlayerMovement>();
 
         // Inicialize o dicionário de contagem de letras
         foreach (char letter in targetPhrase)
@@ -25,24 +37,43 @@ public class LetterPlacement : MonoBehaviour
                 letterCounts[letter] = 0;
             }
         }
+        
     }
 
     private void Update()
     {
-        if (Input.anyKeyDown)
-        {
-            char pressedKey = Input.inputString[0];
-
-            if (char.IsLetter(pressedKey) && targetPhrase.Contains(pressedKey.ToString()))
+            if (Input.anyKeyDown)
             {
-                // Verifica se ainda é possível adicionar a letra
-                if (letterCounts[pressedKey] < CountOccurrences(targetPhrase, pressedKey))
+           
+                char pressedKey = Input.inputString[0];
+
+                if (char.IsLetter(pressedKey) && targetPhrase.Contains(pressedKey.ToString()))
                 {
-                    AddLetter(pressedKey);
-                    letterCounts[pressedKey]++;
+                    // Verifica se ainda é possível adicionar a letra
+                    if (letterCounts[pressedKey] < CountOccurrences(targetPhrase, pressedKey))
+                    {
+                        AddLetter(pressedKey);
+                        letterCounts[pressedKey]++;
+                    }
                 }
             }
-        }
+            //  else 
+            // {
+            //     Debug.Log(currentInput);
+            //     Debug.Log(currentInput.Length);
+            //     Debug.Log(targetPhrase.Length);
+            //     Debug.Log("essa é a target phrase " + targetPhrase);
+            // }
+           if(currentInput == targetPhrase)
+           {
+            Debug.Log("Verdade");
+            officeUI.SetActive(false);
+            _playerMovement.transform.position = new Vector3 (-1.5f,0.124f,0);
+           }
+        //    else{
+        //     Debug.Log("Nao sao e nao sei pq");
+        //    }
+        
     }
 
     private int CountOccurrences(string str, char letter)
@@ -108,7 +139,4 @@ public class LetterPlacement : MonoBehaviour
         }
         return new string(array);
     }
-    
-
-
 }

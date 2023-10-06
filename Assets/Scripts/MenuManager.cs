@@ -11,16 +11,6 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("LucasTestScene");
     }
 
-    public void OpenOptions()
-    {
-
-    }
-
-    public void CloseOptions()
-    {
-
-    }
-
     public void QuitGame()
     {
         Application.Quit();

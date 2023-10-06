@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class GroundedPlayerState : PlayerState
 {
   private bool _isGrounded;
   protected Vector2 input;
+
+  public PlayerInputHandler playerInputHandler;
     public GroundedPlayerState(PlayerStateMachine fsm, PlayerMovement playerMovement, string AnimatorBool) : base(fsm, playerMovement, AnimatorBool)
     {
     }

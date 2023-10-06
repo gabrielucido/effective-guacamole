@@ -36,11 +36,13 @@ public class SittingPlayerState : GroundedPlayerState
         //     _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._MOVING_Y));
         // }
 
-        if(Input.GetKey(KeyCode.Escape))
+        if(input.x != 0f)
         {
             
-            _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._IDLE_));
+            _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._MOVING_X));
+            
         }
+        
     }
 
     public override void FixedUpdate()
