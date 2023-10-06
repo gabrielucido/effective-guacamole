@@ -9,6 +9,7 @@ public enum PlayerStatesEnum
     _MOVING_Y,
     _PUSHING_,
     _HURT_,
-    _SITTING_,
+    _SITTING_CLASSROOM,
+    _SITTING_OFFICE,
     _DYING_
 }

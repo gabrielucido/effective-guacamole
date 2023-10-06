@@ -35,9 +35,13 @@ public class GroundedPlayerState : PlayerState
           _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._DYING_));
         }
 
-        if(_playerMovement.isSitting == true)
+        if(_playerMovement.isSittingClassroom == true)
         {
-          _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._SITTING_));
+          _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._SITTING_CLASSROOM));
+        }
+        if(_playerMovement.isSittingOffice == true)
+        {
+          _fsm.SetCurrentState(_fsm.GetState((int)PlayerStatesEnum._SITTING_OFFICE));
         }
     }
 

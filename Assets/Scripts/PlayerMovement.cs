@@ -15,7 +15,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isDying = false;
 
-    public bool isSitting = false;
+    public bool isSittingClassroom = false;
+
+    public bool isSittingOffice = false;
 
     [SerializeField] public float speed;
 
@@ -47,7 +49,8 @@ public class PlayerMovement : MonoBehaviour
        _playerStateMachine.Add((int)PlayerStatesEnum._MOVING_X, new MovingPlayerState(_playerStateMachine,this,"Moving"));
        _playerStateMachine.Add((int)PlayerStatesEnum._MOVING_Y, new MovingPlayerState(_playerStateMachine,this,"Moving"));
        _playerStateMachine.Add((int)PlayerStatesEnum._DYING_,new DyingPlayerState(_playerStateMachine,this,"Dying"));
-       _playerStateMachine.Add((int)PlayerStatesEnum._SITTING_, new SittingPlayerState(_playerStateMachine,this,"Sitting"));
+       _playerStateMachine.Add((int)PlayerStatesEnum._SITTING_CLASSROOM, new SittingPlayerState(_playerStateMachine,this,"SittingClassroom"));
+       _playerStateMachine.Add((int)PlayerStatesEnum._SITTING_OFFICE,new SittingPlayerState(_playerStateMachine,this,"SittingOffice"));
        _playerStateMachine.SetCurrentState(_playerStateMachine.GetState((int)PlayerStatesEnum._IDLE_));
     }
 
@@ -92,7 +95,12 @@ public class PlayerMovement : MonoBehaviour
         if(other.gameObject.CompareTag("Chair"))
         {
             Debug.Log("In Range");
-            isSitting = true; 
+            isSittingClassroom = true; 
+            gameObject.transform.position = new Vector2(other.gameObject.transform.position.x,other.gameObject.transform.position.y);
+        }
+         if(other.gameObject.CompareTag("OfficeChair"))
+        {
+            isSittingOffice = true;
             gameObject.transform.position = new Vector2(other.gameObject.transform.position.x,other.gameObject.transform.position.y);
         }
     }
@@ -101,7 +109,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Chair"))
         {
-            isSitting = false;
+            isSittingClassroom = false;
+        }
+
+        if(other.gameObject.CompareTag("OfficeChair"))
+        {
+            isSittingOffice = false;
         }
     }
 }
