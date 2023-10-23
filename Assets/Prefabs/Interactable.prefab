@@ -57,7 +57,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 16
@@ -309,9 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470c991d18a97449992d7e31f6ff1a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overlaySprite: {fileID: 21300000, guid: 3ac7f0678126742098f4b483886db4b5, type: 3}
+  enabledSprite: {fileID: 0}
+  disabledSprite: {fileID: 0}
   offset: {x: 0, y: 1, z: 0}
-  callbackController: {fileID: 0}
+  eventCode: 0
 --- !u!61 &8957932504943935225
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -370,3 +371,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b031a812a4ce14eb6866a1820ea6cc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameController: {fileID: 0}
